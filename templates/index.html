@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CloudTask</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>☁️ CloudTask</h1>
+
+    <p>Cloud-Based Task Management System</p>
+
+    <form action="/add" method="POST" class="task-box">
+
+        <input
+            type="text"
+            name="task"
+            placeholder="Enter your task"
+            required
+        >
+
+        <button type="submit">
+            Add Task
+        </button>
+
+    </form>
+
+
+    <div class="tasks">
+
+        <h2>My Tasks</h2>
+
+        {% for task in tasks %}
+
+        <div class="task">
+
+            {% if task["completed"] == 1 %}
+
+                <span>
+                    <s>{{ task["title"] }}</s> ✅
+                </span>
+
+            {% else %}
+
+                <span>
+                    {{ task["title"] }}
+                </span>
+
+                <a href="/complete/{{ task['id'] }}">
+                    <button type="button">
+                        Complete
+                    </button>
+                </a>
+
+            {% endif %}
+
+
+            <a href="/delete/{{ task['id'] }}">
+
+                <button type="button">
+                    Delete
+                </button>
+
+            </a>
+
+        </div>
+
+        {% else %}
+
+        <p>No tasks yet. Add your first task!</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
